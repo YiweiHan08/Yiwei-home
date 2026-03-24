@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <!-- 🔧 CHANGE: project name -->
+  <title>Project Name — Yiwei Han</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+  <style>
+    /* =====================
+       CSS VARIABLES — same as index.html
+    ===================== */
+    :root {
+      --bg: #f9f9f7;
+      --surface: #ffffff;
+      --border: #e8e8e4;
+      --text-primary: #1a1a18;
+      --text-secondary: #6b6b65;
+      --text-muted: #a0a09a;
+      --accent: #2d6a4f;
+      --accent-light: #e8f4ef;
+      --font-display: 'DM Serif Display', Georgia, serif;
+      --font-body: 'DM Sans', sans-serif;
+      --transition: 0.18s ease;
+      --radius: 10px;
+      --content-width: 720px;
+    }
+
+    [data-theme="dark"] {
+      --bg: #111110;
+      --surface: #1c1c1a;
+      --border: #2a2a27;
+      --text-primary: #f0f0ea;
+      --text-secondary: #888882;
+      --text-muted: #555550;
+      --accent: #52b788;
+      --accent-light: #1a2e24;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 15px; scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text-primary);
+      transition: background var(--transition), color var(--transition);
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* =====================
+       TOP NAV BAR
+    ===================== */
+    .topnav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 52px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      transition: background var(--transition);
+    }
+
+    .topnav-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      padding: 5px 10px;
+      border-radius: 6px;
+      transition: background var(--transition), color var(--transition);
+    }
+
+    .back-btn:hover {
+      background: var(--border);
+      color: var(--text-primary);
+    }
+
+    .back-arrow {
+      width: 14px;
+      height: 14px;
+    }
+
+    .topnav-divider {
+      width: 1px;
+      height: 16px;
+      background: var(--border);
+    }
+
+    .topnav-title {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .topnav-right {
+      display: flex;
+      gap: 6px;
+    }
+
+    .theme-btn {
+      padding: 4px 10px;
+      font-size: 0.72rem;
+      font-family: var(--font-body);
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+
+    .theme-btn:hover, .theme-btn.active {
+      background: var(--border);
+      color: var(--text-primary);
+    }
+
+    /* =====================
+       HERO SECTION
+    ===================== */
+    .hero {
+      max-width: var(--content-width);
+      margin: 0 auto;
+      padding: 64px 40px 48px;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .project-meta {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .meta-tag {
+      font-size: 0.72rem;
+      padding: 3px 10px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+
+    .meta-tag.highlight {
+      background: var(--accent-light);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .project-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+
+    .project-subtitle {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      max-width: 560px;
+      margin-bottom: 36px;
+    }
+
+    /* Project stats row */
+    .project-stats {
+      display: flex;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 0;
+    }
+
+    .stat {
+      flex: 1;
+      padding: 16px 20px;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+    }
+
+    .stat:last-child { border-right: none; }
+
+    .stat-label {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .stat-value {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    /* =====================
+       CONTENT AREA
+    ===================== */
+    .content {
+      max-width: var(--content-width);
+      margin: 0 auto;
+      padding: 0 40px 100px;
+    }
+
+    /* Section divider */
+    .section {
+      margin-top: 56px;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    .section-label {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* =====================
+       IMAGE PLACEHOLDER
+    ===================== */
+    .img-placeholder {
+      width: 100%;
+      border-radius: var(--radius);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .img-placeholder.tall   { aspect-ratio: 16/9; }
+    .img-placeholder.short  { aspect-ratio: 21/9; }
+    .img-placeholder.square { aspect-ratio: 1/1; }
+
+    /* When you add a real image, replace the div with:
+       <img src="your-image.jpg" alt="description" style="width:100%; border-radius: var(--radius);"> */
+    .img-placeholder-inner {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      position: absolute;
+      inset: 0;
+    }
+
+    .img-placeholder-inner svg {
+      width: 28px;
+      height: 28px;
+      opacity: 0.4;
+    }
+
+    /* Actual images */
+    .project-image {
+      width: 100%;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      display: block;
+    }
+
+    /* Two-column image grid */
+    .img-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    /* =====================
+       VIDEO PLACEHOLDER
+    ===================== */
+    .video-placeholder {
+      width: 100%;
+      aspect-ratio: 16/9;
+      border-radius: var(--radius);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .video-placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 20px,
+        var(--border) 20px,
+        var(--border) 21px
+      );
+      opacity: 0.3;
+    }
+
+    .video-play-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--accent-light);
+      border: 1px solid var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .video-play-icon svg {
+      width: 18px;
+      height: 18px;
+      fill: var(--accent);
+      margin-left: 2px;
+    }
+
+    .video-label {
+      position: relative;
+      z-index: 1;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+    }
+
+    /* To replace with a real video embed:
+       <iframe width="100%" style="aspect-ratio:16/9; border-radius: var(--radius); border:none;"
+         src="https://www.youtube.com/embed/YOUR_VIDEO_ID" allowfullscreen></iframe> */
+
+    /* =====================
+       TEXT BODY
+    ===================== */
+    .body-text h3 {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      letter-spacing: -0.01em;
+      margin-bottom: 12px;
+      margin-top: 32px;
+      color: var(--text-primary);
+    }
+
+    .body-text h3:first-child { margin-top: 0; }
+
+    .body-text p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    .body-text ul {
+      margin: 0 0 16px 20px;
+    }
+
+    .body-text ul li {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 6px;
+    }
+
+    /* Highlighted callout block */
+    .callout {
+      background: var(--accent-light);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+
+    /* =====================
+       CAPTION
+    ===================== */
+    .caption {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: 8px;
+      margin-bottom: 0;
+    }
+
+    /* =====================
+       NEXT PROJECT FOOTER
+    ===================== */
+    .next-project {
+      margin-top: 80px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .next-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .next-title {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      color: var(--text-primary);
+      transition: color var(--transition);
+    }
+
+    .next-project a:hover .next-title {
+      color: var(--accent);
+    }
+
+    .next-arrow {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--transition);
+      color: var(--text-secondary);
+    }
+
+    .next-project a:hover .next-arrow {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+      transform: translateX(4px);
+    }
+
+    /* =====================
+       MOBILE
+    ===================== */
+    @media (max-width: 680px) {
+      .hero, .content { padding-left: 20px; padding-right: 20px; }
+      .topnav { padding: 0 20px; }
+      .img-grid-2 { grid-template-columns: 1fr; }
+      .project-stats { flex-direction: column; }
+      .stat { border-right: none; border-bottom: 1px solid var(--border); }
+      .stat:last-child { border-bottom: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =====================
+       TOP NAVIGATION BAR
+  ===================== -->
+  <nav class="topnav">
+    <div class="topnav-left">
+      <!-- 🔧 CHANGE: update href to correct path back to your index -->
+      <a href="../index.html" class="back-btn">
+        <svg class="back-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M9 2L4 7l5 5"/>
+        </svg>
+        Yiwei Han
+      </a>
+      <div class="topnav-divider"></div>
+      <!-- 🔧 CHANGE: project name -->
+      <span class="topnav-title">Project Name</span>
+    </div>
+    <div class="topnav-right">
+      <button class="theme-btn active" onclick="setTheme('light', this)">Light</button>
+      <button class="theme-btn" onclick="setTheme('dark', this)">Dark</button>
+    </div>
+  </nav>
+
+  <!-- =====================
+       HERO
+  ===================== -->
+  <header class="hero">
+
+    <!-- 🔧 CHANGE: update tags to match your project -->
+    <div class="project-meta">
+      <span class="meta-tag highlight">Product Design</span>
+      <span class="meta-tag">Full-time</span>
+      <span class="meta-tag">2024</span>
+    </div>
+
+    <!-- 🔧 CHANGE: project title and subtitle -->
+    <h1 class="project-title">Project Name</h1>
+    <p class="project-subtitle">
+      A one or two sentence summary of what this project is about, what problem it solves, and what your role was.
+    </p>
+
+    <!-- 🔧 CHANGE: fill in your project details -->
+    <div class="project-stats">
+      <div class="stat">
+        <div class="stat-label">Role</div>
+        <div class="stat-value">Product Designer</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Timeline</div>
+        <div class="stat-value">3 months</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Platform</div>
+        <div class="stat-value">Web & Mobile</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Tools</div>
+        <div class="stat-value">Figma, HTML</div>
+      </div>
+    </div>
+
+  </header>
+
+  <!-- =====================
+       MAIN CONTENT
+  ===================== -->
+  <main class="content">
+
+    <!-- ── COVER IMAGE ── -->
+    <div class="section">
+      <div class="img-placeholder tall">
+        <div class="img-placeholder-inner">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <path d="M21 15l-5-5L5 21"/>
+          </svg>
+          Cover image — replace with your screenshot or photo
+        </div>
+      </div>
+      <!-- To use a real image, replace the div above with:
+           <img src="../images/project-cover.jpg" alt="Project cover" class="project-image"> -->
+    </div>
+
+    <!-- ── OVERVIEW TEXT ── -->
+    <div class="section">
+      <div class="section-label">Overview</div>
+      <div class="body-text">
+        <!-- 🔧 CHANGE: write your project overview -->
+        <h3>The Problem</h3>
+        <p>
+          Describe the problem you were solving. What was broken, missing, or painful for users? Why did it matter? Keep this honest and specific — the best case studies start with a clear, real problem.
+        </p>
+
+        <div class="callout">
+          💡 Callout box — great for highlighting a key insight, quote from a user, or important statistic that frames the whole project.
+        </div>
+
+        <h3>My Approach</h3>
+        <p>
+          Walk through how you tackled it. What research did you do? What constraints were you working with? What decisions did you make early on and why?
+        </p>
+        <ul>
+          <li>First key decision or step in your process</li>
+          <li>Second key decision or step</li>
+          <li>Third key decision or step</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ── IMAGE: FULL WIDTH ── -->
+    <div class="section">
+      <div class="section-label">Early Explorations</div>
+      <div class="img-placeholder tall">
+        <div class="img-placeholder-inner">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <path d="M21 15l-5-5L5 21"/>
+          </svg>
+          Image — e.g. early sketches, wireframes, research notes
+        </div>
+      </div>
+      <p class="caption">Caption: describe what's shown in this image</p>
+    </div>
+
+    <!-- ── IMAGE GRID: TWO COLUMNS ── -->
+    <div class="section">
+      <div class="section-label">Design Iterations</div>
+      <div class="img-grid-2">
+        <div>
+          <div class="img-placeholder square">
+            <div class="img-placeholder-inner">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                <circle cx="8.5" cy="8.5" r="1.5"/>
+                <path d="M21 15l-5-5L5 21"/>
+              </svg>
+              Version 1
+            </div>
+          </div>
+          <p class="caption">Version 1 — describe this iteration</p>
+        </div>
+        <div>
+          <div class="img-placeholder square">
+            <div class="img-placeholder-inner">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                <circle cx="8.5" cy="8.5" r="1.5"/>
+                <path d="M21 15l-5-5L5 21"/>
+              </svg>
+              Version 2
+            </div>
+          </div>
+          <p class="caption">Version 2 — what changed and why</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── VIDEO PLACEHOLDER ── -->
+    <div class="section">
+      <div class="section-label">Prototype / Demo</div>
+      <div class="video-placeholder">
+        <div class="video-play-icon">
+          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <span class="video-label">Video placeholder — paste a YouTube or Vimeo embed here</span>
+      </div>
+      <!-- To embed a real video, replace the div above with:
+           <iframe width="100%" style="aspect-ratio:16/9; border-radius:10px; border:none;"
+             src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+             allowfullscreen></iframe>
+           OR for a self-hosted video:
+           <video width="100%" style="border-radius:10px;" controls>
+             <source src="../videos/demo.mp4" type="video/mp4">
+           </video> -->
+      <p class="caption">Caption: what this video shows</p>
+    </div>
+
+    <!-- ── FINAL DESIGN ── -->
+    <div class="section">
+      <div class="section-label">Final Design</div>
+      <div class="img-placeholder short">
+        <div class="img-placeholder-inner">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <path d="M21 15l-5-5L5 21"/>
+          </svg>
+          Final design — your best, most polished screenshot
+        </div>
+      </div>
+    </div>
+
+    <!-- ── OUTCOME TEXT ── -->
+    <div class="section">
+      <div class="section-label">Outcome</div>
+      <div class="body-text">
+        <!-- 🔧 CHANGE: write what happened after you shipped -->
+        <h3>Results & Reflection</h3>
+        <p>
+          What happened after this shipped? Any metrics, feedback, or qualitative outcomes you can share? Even if you can't share numbers, describe the impact — did it solve the problem?
+        </p>
+        <p>
+          What would you do differently? What did you learn? This section shows maturity and self-awareness — recruiters and clients love it.
+        </p>
+      </div>
+    </div>
+
+    <!-- ── NEXT PROJECT ── -->
+    <!-- 🔧 CHANGE: link to your next project -->
+    <div class="next-project">
+      <a href="project-two.html">
+        <div class="next-label">Next Project</div>
+        <div class="next-title">Project Two →</div>
+      </a>
+      <a href="project-two.html">
+        <div class="next-arrow">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M3 8h10M9 4l4 4-4 4"/>
+          </svg>
+        </div>
+      </a>
+    </div>
+
+  </main>
+
+  <script>
+    // Dark / light mode
+    function setTheme(theme, btn) {
+      document.documentElement.setAttribute('data-theme', theme === 'dark' ? 'dark' : '');
+      document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      localStorage.setItem('theme', theme);
+    }
+
+    // Load saved theme from main site
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      document.querySelectorAll('.theme-btn').forEach((b, i) => {
+        b.classList.toggle('active', i === 1);
+      });
+    }
+  </script>
+
+</body>
+</html>
