@@ -61,6 +61,13 @@
       text-decoration: none;
     }
 
+    a.update-card,
+    a.project-row {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+    }
+
     /* =====================
        SIDEBAR
     ===================== */
@@ -318,7 +325,7 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
-      margin-top: 48px;
+      margin-top: 0;
     }
 
     .project-row {
@@ -374,6 +381,54 @@
       background: var(--border);
       border-radius: 20px;
       color: var(--text-secondary);
+    }
+
+    /* =====================
+       PROJECT TABS
+    ===================== */
+    .project-tabs {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      gap: 4px;
+      background: var(--bg);
+      padding: 12px 0;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+      transition: background var(--transition);
+    }
+
+    .project-tab {
+      font-size: 0.8rem;
+      font-family: var(--font-body);
+      padding: 5px 14px;
+      border-radius: 20px;
+      border: 1px solid transparent;
+      background: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+
+    .project-tab:hover {
+      background: var(--border);
+      color: var(--text-primary);
+    }
+
+    .project-tab.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    a.project-row.fading {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    a.project-row.hidden {
+      display: none;
     }
 
     /* =====================
@@ -473,19 +528,19 @@
 
     <nav class="nav-section">
       <div class="nav-label">Stay in touch</div>
-      <div class="nav-item">
+      <a href="mailto:you@email.com" class="nav-item">
         <div class="nav-item-left">
           <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="10" rx="1"/><path d="M2 5l6 4 6-4"/></svg>
           Contact
         </div>
-      </div>
-      <div class="nav-item">
+      </a>
+      <a href="https://twitter.com" target="_blank" class="nav-item">
         <div class="nav-item-left">
           <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 3L8 8M3 7l3 1 1 3 6-5"/></svg>
           Twitter / X
         </div>
         <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" style="opacity:0.4"><path d="M2 8L8 2M4 2h4v4"/></svg>
-      </div>
+      </a>
     </nav>
 
     <div class="sidebar-bottom">
@@ -522,24 +577,24 @@
 
       <!-- 🔧 CHANGE: swap in your own updates -->
       <div class="updates-grid">
-        <div class="update-card">
+        <a href="#" target="_blank" class="update-card">
           <div class="update-icon">🚀</div>
           <div class="update-title">Launched this website</div>
           <div class="update-desc">Built with plain HTML & CSS. First step on the journey.</div>
           <div class="update-date">Mar 2026</div>
-        </div>
-        <div class="update-card">
+        </a>
+        <a href="#" target="_blank" class="update-card">
           <div class="update-icon">✏️</div>
           <div class="update-title">Started writing online</div>
           <div class="update-desc">Sharing notes on design, code, and things I'm learning.</div>
           <div class="update-date">Mar 2026</div>
-        </div>
-        <div class="update-card">
+        </a>
+        <a href="#" target="_blank" class="update-card">
           <div class="update-icon">🎓</div>
           <div class="update-title">Learning design engineering</div>
           <div class="update-desc">Bridging the gap between design and code.</div>
           <div class="update-date">Jan 2026</div>
-        </div>
+        </a>
       </div>
     </div>
 
@@ -557,13 +612,21 @@
     <!-- PROJECTS PAGE -->
     <div class="page" id="page-projects">
       <h2 class="section-title" style="margin-bottom: 8px;">Projects</h2>
-      <p style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 32px;">
+      <p style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 24px;">
         A selection of things I've built or worked on.
       </p>
 
+      <!-- Sticky filter tabs -->
+      <div class="project-tabs">
+        <button class="project-tab active" onclick="filterProjects('all', this)">All</button>
+        <button class="project-tab" onclick="filterProjects('web', this)">Web</button>
+        <button class="project-tab" onclick="filterProjects('design', this)">Design</button>
+        <button class="project-tab" onclick="filterProjects('code', this)">Code</button>
+      </div>
+
       <!-- 🔧 CHANGE: add your own projects -->
       <div class="projects-list">
-        <div class="project-row">
+        <a href="#" target="_blank" class="project-row" data-category="web">
           <div class="project-thumb">🌐</div>
           <div class="project-info">
             <div class="project-name">This Website</div>
@@ -573,8 +636,8 @@
             <span class="tag">HTML</span>
             <span class="tag">CSS</span>
           </div>
-        </div>
-        <div class="project-row">
+        </a>
+        <a href="#" target="_blank" class="project-row" data-category="design">
           <div class="project-thumb">📐</div>
           <div class="project-info">
             <div class="project-name">Project Two</div>
@@ -583,8 +646,8 @@
           <div class="project-tags">
             <span class="tag">Design</span>
           </div>
-        </div>
-        <div class="project-row">
+        </a>
+        <a href="#" target="_blank" class="project-row" data-category="code">
           <div class="project-thumb">💡</div>
           <div class="project-info">
             <div class="project-name">Project Three</div>
@@ -593,7 +656,7 @@
           <div class="project-tags">
             <span class="tag">Code</span>
           </div>
-        </div>
+        </a>
       </div>
     </div>
 
@@ -642,6 +705,34 @@
         showPage(pages[idx], navItems[idx]);
       }
     });
+
+    // --- PROJECT FILTER TABS ---
+    function filterProjects(category, tabEl) {
+      document.querySelectorAll('.project-tab').forEach(t => t.classList.remove('active'));
+      tabEl.classList.add('active');
+
+      const rows = document.querySelectorAll('.project-row');
+
+      // Fade everything out first
+      rows.forEach(row => {
+        if (!row.classList.contains('hidden')) row.classList.add('fading');
+      });
+
+      setTimeout(() => {
+        rows.forEach(row => {
+          const match = category === 'all' || row.dataset.category === category;
+          if (match) {
+            row.classList.remove('hidden');
+            // Force reflow so transition fires
+            row.offsetHeight;
+            row.classList.remove('fading');
+          } else {
+            row.classList.add('hidden');
+            row.classList.remove('fading');
+          }
+        });
+      }, 150);
+    }
 
     // --- DARK / LIGHT MODE ---
     function setTheme(theme, btn) {
